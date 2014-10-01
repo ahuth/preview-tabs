@@ -2,8 +2,8 @@
   "name": "preview-tabs",
   "main": "./lib/preview-tabs",
   "version": "0.0.0",
-  "description": "A short description of your package",
-  "activationEvents": ["preview-tabs:toggle"],
+  "description": "Sublime-style preview tabs for Atom",
+  "activationEvents": [],
   "repository": "https://github.com/atom/preview-tabs",
   "license": "MIT",
   "engines": {
