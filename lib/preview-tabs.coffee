@@ -1,4 +1,5 @@
-PreviewTabsView = require './preview-tabs-view'
+_ = require "underscore"
+PreviewTabsView = require "./preview-tabs-view"
 
 module.exports =
   previewTabsView: null

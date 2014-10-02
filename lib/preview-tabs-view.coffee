@@ -1,9 +1,9 @@
-{View} = require 'atom'
+{View} = require "atom"
 
 module.exports =
 class PreviewTabsView extends View
   @content: ->
-    @div class: 'preview-tabs overlay from-top', =>
+    @div class: "preview-tabs overlay from-top", =>
       @div "The PreviewTabs package is Alive! It's ALIVE!", class: "message"
 
   initialize: (serializeState) ->
