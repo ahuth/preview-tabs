@@ -6,4 +6,3 @@ class PreviewTabsView extends View
     @div class: "preview-tabs"
 
   initialize: (@pane) ->
-    @pane.prepend(this)
