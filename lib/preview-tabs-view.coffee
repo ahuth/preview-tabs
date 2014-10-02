@@ -5,4 +5,4 @@ class PreviewTabsView extends View
   @content: ->
     @div class: "preview-tabs"
 
-  initialize: (@pane) ->
+  initialize: (paneView) ->
