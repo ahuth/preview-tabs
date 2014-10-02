@@ -15,12 +15,6 @@ describe "PreviewTabs", ->
       expect(atom.workspaceView.panes.find(".pane").length).toBe 1
       expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 1
 
-    it "adds preview tabs views to new panes", ->
-      pane = atom.workspaceView.getActivePaneView()
-      pane.splitRight(pane.copyActiveItem())
-      expect(atom.workspaceView.find(".pane").length).toBe 2
-      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 2
-
   describe "deactivation", ->
     it "removes all preview tabs views", ->
       pane = atom.workspaceView.getActivePaneView()
@@ -41,3 +35,18 @@ describe "PreviewTabs", ->
       pane.splitRight(pane.copyActiveItem())
       expect(atom.workspaceView.panes.find(".pane").length).toBe 2
       expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 0
+
+  describe "adding and removing panes", ->
+    pane = null
+
+    beforeEach ->
+      pane = atom.workspaceView.getActivePaneView()
+      pane.splitRight(pane.copyActiveItem())
+
+    it "adds a preview tabs view to new panes", ->
+      expect(PreviewTabs.previewTabsViews.length).toBe 2
+
+    it "removes the corresponding preview tabs view from destroyed panes", ->
+      expect(PreviewTabs.previewTabsViews.length).toBe 2
+      atom.workspaceView.destroyActivePane()
+      expect(PreviewTabs.previewTabsViews.length).toBe 1
