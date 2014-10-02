@@ -1,30 +1,43 @@
-{WorkspaceView} = require 'atom'
-PreviewTabs = require '../lib/preview-tabs'
-
-# Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
-#
-# To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
-# or `fdescribe`). Remove the `f` to unfocus the block.
+{WorkspaceView} = require "atom"
+PreviewTabs = require "../lib/preview-tabs"
 
 describe "PreviewTabs", ->
   activationPromise = null
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
-    activationPromise = atom.packages.activatePackage('preview-tabs')
 
-  describe "when the preview-tabs:toggle event is triggered", ->
-    it "attaches and then detaches the view", ->
-      expect(atom.workspaceView.find('.preview-tabs')).not.toExist()
+    waitsForPromise ->
+      atom.packages.activatePackage("preview-tabs")
 
-      # This is an activation event, triggering it will cause the package to be
-      # activated.
-      atom.workspaceView.trigger 'preview-tabs:toggle'
+  describe "activation", ->
+    it "adds preview tabs views to existing panes", ->
+      expect(atom.workspaceView.panes.find(".pane").length).toBe 1
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 1
 
-      waitsForPromise ->
-        activationPromise
+    it "adds preview tabs views to new panes", ->
+      pane = atom.workspaceView.getActivePaneView()
+      pane.splitRight(pane.copyActiveItem())
+      expect(atom.workspaceView.find(".pane").length).toBe 2
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 2
 
-      runs ->
-        expect(atom.workspaceView.find('.preview-tabs')).toExist()
-        atom.workspaceView.trigger 'preview-tabs:toggle'
-        expect(atom.workspaceView.find('.preview-tabs')).not.toExist()
+  describe "deactivation", ->
+    it "removes all preview tabs views", ->
+      pane = atom.workspaceView.getActivePaneView()
+      pane.splitRight(pane.copyActiveItem())
+      expect(atom.workspaceView.panes.find(".pane").length).toBe 2
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 2
+
+      atom.packages.deactivatePackage("preview-tabs")
+      expect(atom.workspaceView.panes.find(".pane").length).toBe 2
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 0
+
+    it "stops adding preview tabs views", ->
+      atom.packages.deactivatePackage("preview-tabs")
+      expect(atom.workspaceView.panes.find(".pane").length).toBe 1
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 0
+
+      pane = atom.workspaceView.getActivePaneView()
+      pane.splitRight(pane.copyActiveItem())
+      expect(atom.workspaceView.panes.find(".pane").length).toBe 2
+      expect(atom.workspaceView.panes.find(".pane > .preview-tabs").length).toBe 0

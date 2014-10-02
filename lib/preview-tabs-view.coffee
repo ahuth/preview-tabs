@@ -5,7 +5,5 @@ class PreviewTabsView extends View
   @content: ->
     @div class: "preview-tabs"
 
-  initialize: (serializeState) ->
-
-  destroy: ->
-    @detach()
+  initialize: (@pane) ->
+    @pane.prepend(this)
