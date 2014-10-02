@@ -1,4 +1,4 @@
-_ = require "underscore"
+_ = require "underscore-plus"
 PreviewTabsView = require "./preview-tabs-view"
 
 module.exports =
