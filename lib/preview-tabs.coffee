@@ -14,5 +14,5 @@ module.exports =
 
   deactivate: ->
     @paneSubscription?.off()
-    previewTabsView.remove() for previewTabsView in @previewTabsViews ? []
+    previewTabsView.remove() for previewTabsView in @previewTabsViews
     @previewTabsViews = []
