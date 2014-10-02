@@ -1,7 +1,4 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
-'context-menu':
-  # '.overlayer':
-  #     'Enable preview-tabs': 'preview-tabs:toggle'
 
 'menu': [
   {
@@ -9,7 +6,7 @@
     'submenu': [
       'label': 'Preview Tabs'
       'submenu': [
-        # { 'label': 'Toggle', 'command': 'preview-tabs:toggle' }
+        { 'label': 'Keep Tab', 'command': 'preview-tabs:keep-tab' }
       ]
     ]
   }
