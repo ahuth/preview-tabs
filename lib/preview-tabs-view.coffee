@@ -12,6 +12,7 @@ class PreviewTabsView extends View
     @pane = paneView.model
     @subscriptions =
       paneItemAdded: @pane.onDidAddItem @_onPaneItemAdded
+      treeEntryDoubleClicked: new PreviewTabsEventHandler(atom.workspaceView, "dblclick", ".tree-view .entry", @_onTreeEntryDoubleClicked)
 
   remove: ->
     @unsubscribe()
@@ -25,3 +26,10 @@ class PreviewTabsView extends View
   _onPaneItemAdded: (item) =>
     @preview?.close()
     @preview = new PreviewTabsPreview(item)
+
+  _onTreeEntryDoubleClicked: (event) =>
+    return unless @preview?
+    fileName = event.target.innerText
+    if @preview.isFile(fileName)
+      @preview.close()
+      @preview = null
