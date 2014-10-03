@@ -28,8 +28,5 @@ class PreviewTabsView extends View
     @preview = new PreviewTabsPreview(item)
 
   _onTreeEntryDoubleClicked: (event) =>
-    return unless @preview?
     fileName = event.target.innerText
-    if @preview.isFile(fileName)
-      @preview.close()
-      @preview = null
+    @preview?.keepIf(fileName)
