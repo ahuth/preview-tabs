@@ -2,7 +2,7 @@ PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
 module.exports =
 class PreviewTabsPreview
-  constructor: (paneItem) ->
+  constructor: (paneItem, @closeNotifier) ->
     @item = paneItem.item
     @_waitsForItemReady =>
       @tab = atom.workspaceView.getActivePaneView().find(".tab.active")
@@ -10,14 +10,18 @@ class PreviewTabsPreview
         itemSaved: @item.onDidSave @_onDidSaveItem
         itemChanged: @item.onDidChange @_onDidChangeItem
         tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, @_onTabDoubleClicked)
+      @tab.addClass("preview-tabs-preview")
 
   destroy: ->
     subscription.dispose() for own name, subscription of @subscriptions
+    @closeNotifier?()
 
   close: ->
+    @item.destroy()
     @destroy()
 
   keep: ->
+    @tab.removeClass("preview-tabs-preview")
     @destroy()
 
   keepIf: (fileName) ->
@@ -29,10 +33,10 @@ class PreviewTabsPreview
       subscription.dispose()
 
   _onDidSaveItem: =>
-    console.log "saved"
+    @keep()
 
   _onDidChangeItem: =>
-    console.log "changed"
+    @keep()
 
   _onTabDoubleClicked: =>
-    console.log "clicked"
+    @keep()

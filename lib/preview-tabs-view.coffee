@@ -25,7 +25,7 @@ class PreviewTabsView extends View
 
   _onPaneItemAdded: (item) =>
     @preview?.close()
-    @preview = new PreviewTabsPreview(item)
+    @preview = new PreviewTabsPreview(item, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     fileName = event.target.innerText
