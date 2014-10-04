@@ -7,8 +7,7 @@ describe "PreviewTabsPreview", ->
 
   beforeEach ->
     editor = new TextEditorView({}).getEditor()
-    paneItem = { item: editor }
-    previewTabsPreview = new PreviewTabsPreview(paneItem, -> true)
+    previewTabsPreview = new PreviewTabsPreview(editor, -> true)
 
   describe "destroying", ->
     subscriptions = null

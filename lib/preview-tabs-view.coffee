@@ -23,9 +23,9 @@ class PreviewTabsView extends View
     subscription.dispose() for own name, subscription of @subscriptions
     super
 
-  _onPaneItemAdded: (item) =>
+  _onPaneItemAdded: (paneItem) =>
     @preview?.close()
-    @preview = new PreviewTabsPreview(item, => @preview = null)
+    @preview = new PreviewTabsPreview(paneItem.item, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     fileName = event.target.innerText
