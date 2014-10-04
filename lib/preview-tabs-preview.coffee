@@ -7,9 +7,9 @@ class PreviewTabsPreview
     @_waitsForItemReady =>
       @tab = atom.workspaceView.getActivePaneView().find(".tab.active")
       @subscriptions =
-        itemSaved: @item.onDidSave @_onDidSaveItem
-        itemChanged: @item.onDidChange @_onDidChangeItem
-        tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, @_onTabDoubleClicked)
+        itemSaved: @item.onDidSave => @keep()
+        itemChanged: @item.onDidChange => @keep()
+        tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, => @keep())
       @tab.addClass("preview-tabs-preview")
 
   destroy: ->
@@ -31,12 +31,3 @@ class PreviewTabsPreview
     subscription = @item.onDidChange ->
       callback?()
       subscription.dispose()
-
-  _onDidSaveItem: =>
-    @keep()
-
-  _onDidChangeItem: =>
-    @keep()
-
-  _onTabDoubleClicked: =>
-    @keep()
