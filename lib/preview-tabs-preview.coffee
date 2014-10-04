@@ -2,7 +2,7 @@ PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
 module.exports =
 class PreviewTabsPreview
-  constructor: (paneItem, @closeNotifier) ->
+  constructor: (paneItem, @destroyNotifier) ->
     @item = paneItem.item
     @_waitsForItemReady =>
       @tab = atom.workspaceView.getActivePaneView().find(".tab.active")
@@ -14,7 +14,7 @@ class PreviewTabsPreview
 
   destroy: ->
     subscription.dispose() for own name, subscription of @subscriptions
-    @closeNotifier?()
+    @destroyNotifier?()
 
   close: ->
     @item.destroy()
