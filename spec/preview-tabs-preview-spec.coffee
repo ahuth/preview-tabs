@@ -1,4 +1,4 @@
-{$, TextEditorView}  = require "atom"
+{TextEditorView}  = require "atom"
 PreviewTabsPreview = require "../lib/preview-tabs-preview"
 
 describe "PreviewTabsPreview", ->
