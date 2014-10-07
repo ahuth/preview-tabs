@@ -25,7 +25,9 @@ class PreviewTabsView extends View
 
   _onPaneItemAdded: (paneItem) =>
     @preview?.close()
-    @preview = new PreviewTabsPreview(paneItem.item, => @preview = null)
+    editor = paneItem.item
+    tab = atom.workspaceView.find(".tab [data-name='#{editor.getTitle()}']").parent()
+    @preview = new PreviewTabsPreview(editor, tab, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     fileName = event.target.innerText

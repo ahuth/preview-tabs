@@ -1,14 +1,16 @@
-{WorkspaceView, TextEditorView}  = require "atom"
+{$, WorkspaceView, TextEditorView}  = require "atom"
 PreviewTabsPreview = require "../lib/preview-tabs-preview"
 
 describe "PreviewTabsPreview", ->
   previewTabsPreview = null
   editor = null
+  tab = null
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
     editor = new TextEditorView({}).getEditor()
-    previewTabsPreview = new PreviewTabsPreview(editor, -> true)
+    tab = $(document.createElement("li"))
+    previewTabsPreview = new PreviewTabsPreview(editor, tab, -> true)
 
   describe "destroying", ->
     subscriptions = null
