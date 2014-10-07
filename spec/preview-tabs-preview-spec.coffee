@@ -1,4 +1,4 @@
-{TextEditorView}  = require "atom"
+{WorkspaceView, TextEditorView}  = require "atom"
 PreviewTabsPreview = require "../lib/preview-tabs-preview"
 
 describe "PreviewTabsPreview", ->
@@ -6,9 +6,9 @@ describe "PreviewTabsPreview", ->
   editor = null
 
   beforeEach ->
+    atom.workspaceView = new WorkspaceView
     editor = new TextEditorView({}).getEditor()
-    paneItem = { item: editor }
-    previewTabsPreview = new PreviewTabsPreview(paneItem, -> true)
+    previewTabsPreview = new PreviewTabsPreview(editor, -> true)
 
   describe "destroying", ->
     subscriptions = null

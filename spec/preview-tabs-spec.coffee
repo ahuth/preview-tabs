@@ -2,8 +2,6 @@
 PreviewTabs = require "../lib/preview-tabs"
 
 describe "PreviewTabs", ->
-  activationPromise = null
-
   beforeEach ->
     atom.workspaceView = new WorkspaceView
 
