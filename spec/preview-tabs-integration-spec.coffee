@@ -1,6 +1,9 @@
-{$, WorkspaceView}  = require "atom"
+{WorkspaceView}  = require "atom"
 
 describe "PreviewTabs Integration Test", ->
+  treeView = null
+  tabsView = null
+
   beforeEach ->
     atom.workspaceView = new WorkspaceView
     atom.workspace = atom.workspaceView.model
@@ -10,46 +13,53 @@ describe "PreviewTabs Integration Test", ->
     waitsForPromise -> atom.packages.activatePackage("preview-tabs")
 
     waitsForPromise -> atom.workspace.open("sample1.js")
-    waitsForPromise -> atom.project.open("sample2.js")
-    waitsForPromise -> atom.project.open("sample3.js")
+    waitsForPromise -> atom.workspace.open("sample2.js")
 
     runs ->
       atom.workspaceView.attachToDom()
+      treeView = atom.workspaceView.find(".tree-view").view()
+      tabsView = atom.workspaceView.find(".tab-bar").view()
 
   it "opens files as previews", ->
-    [treeEntry1, treeEntry2, treeEntry3] = $(".tree-view .file")
+    expect(tabsView.find(".tab").length).toBe 1
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
+    expect(tabsView.find(".active .title").attr("data-name")).toBe "sample2.js"
 
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
-    expect($(".pane").length).toBe 1
-
-    treeEntry2.click()
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
-    expect($(".pane").length).toBe 1
-
-    treeEntry3.click()
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
-    expect($(".pane").length).toBe 1
+    treeEntry1 = treeView.find(".name[data-name='sample1.js']")
+    treeEntry1.click()
+    waits(50)
+    runs ->
+      expect(tabsView.find(".tab").length).toBe 1
+      expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
+      expect(tabsView.find(".active .title").attr("data-name")).toBe "sample1.js"
 
   it "keeps tabs when they're double clicked", ->
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
-    $(".tab.active").trigger "dblclick"
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe false
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
+    tabsView.find(".active").trigger "dblclick"
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe false
+
+    treeEntry1 = treeView.find(".name[data-name='sample1.js']")
+    treeEntry1.click()
+    waits(50)
+    runs ->
+      expect(tabsView.find(".tab").length).toBe 2
+      expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
 
   it "keeps tabs when the file is saved", ->
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
     editor = atom.workspaceView.getActivePaneItem()
     editor.save()
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe false
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe false
 
   it "keeps tabs when the files is modified", ->
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
     editor = atom.workspaceView.getActivePaneItem()
     editor.setText("hello")
-    editor.setText("world")
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe false
+    editor.setText("hello world")
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe false
 
   it "keeps tabs when the tree entry is double clicked", ->
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe true
-    treeEntry1 = $(".tree-view .file")[0]
-    $(treeEntry1).trigger "dblclick"
-    expect($(".tab.active").hasClass("preview-tabs-preview")).toBe false
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe true
+    treeEntry2 = treeView.find(".name[data-name='sample2.js']")
+    treeEntry2.trigger "dblclick"
+    expect(tabsView.find(".active").hasClass("preview-tabs-preview")).toBe false
