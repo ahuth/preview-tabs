@@ -2,8 +2,7 @@ PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
 module.exports =
 class PreviewTabsPreview
-  constructor: (@editor, @destroyNotifier) ->
-    @tab = atom.workspaceView.find(".tab [data-name='#{@editor.getTitle()}']").parent()
+  constructor: (@editor, @tab, @destroyNotifier) ->
     @tab.addClass("preview-tabs-preview")
     @subscriptions =
       itemSaved: @editor.onDidSave @_onDidSave
