@@ -1,7 +1,7 @@
-{WorkspaceView, TextEditorView}  = require "atom"
+{$, WorkspaceView, TextEditorView}  = require "atom"
 PreviewTabsView = require "../lib/preview-tabs-view"
 
-fdescribe "PreviewTabsView", ->
+describe "PreviewTabsView", ->
   pane = null
   previewTabsView = null
 
@@ -28,6 +28,21 @@ fdescribe "PreviewTabsView", ->
       editor2 = new TextEditorView({}).getEditor()
       pane.addItem(editor2)
       expect(closeSpy).toHaveBeenCalled()
+
+    describe "when a tree entry is double clicked", ->
+      tree = null
+
+      beforeEach ->
+        editor.getTitle = -> "test.js"
+        tree = $(document.createElement("ol")).addClass("tree-view")
+        tree.html('<li class="file entry" data-name="test.js">test.js</li>')
+        atom.workspaceView.prepend(tree)
+
+      it "keeps the newly opened file", ->
+        pane.addItem(editor)
+        expect(previewTabsView.preview).toBeTruthy()
+        tree.find(".file").trigger("dblclick")
+        expect(previewTabsView.preview).toBeFalsy()
 
   describe "removing", ->
     subscriptions = null
