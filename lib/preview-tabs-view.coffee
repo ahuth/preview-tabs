@@ -24,6 +24,7 @@ class PreviewTabsView extends View
     super
 
   _onPaneItemAdded: (paneItem) =>
+    return unless paneItem.item.buffer?
     @preview?.close()
     editor = paneItem.item
     editorTitle = editor.getTitle()

@@ -1,4 +1,4 @@
-{$, WorkspaceView, TextEditorView}  = require "atom"
+{$, WorkspaceView, TextEditorView, View}  = require "atom"
 PreviewTabsView = require "../lib/preview-tabs-view"
 
 describe "PreviewTabsView", ->
@@ -12,6 +12,10 @@ describe "PreviewTabsView", ->
 
   describe "adding pane items", ->
     editor = null
+
+    class GenericView extends View
+      @content: -> @div "test"
+      initialize: ->
 
     beforeEach ->
       editor = new TextEditorView({}).getEditor()
@@ -28,6 +32,12 @@ describe "PreviewTabsView", ->
       editor2 = new TextEditorView({}).getEditor()
       pane.addItem(editor2)
       expect(closeSpy).toHaveBeenCalled()
+
+    it "does not preview items without a buffer", ->
+      expect(previewTabsView.preview).toBeFalsy()
+      genericView = new GenericView()
+      pane.addItem(genericView)
+      expect(previewTabsView.preview).toBeFalsy()
 
     describe "when a tree entry is double clicked", ->
       tree = null
