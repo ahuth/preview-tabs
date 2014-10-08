@@ -8,7 +8,7 @@ describe "PreviewTabsPreview", ->
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
-    tab = $(document.createElement("li"))
+    tab = $(document.createElement("li")).html("test.js")
     editor = new TextEditorView({}).getEditor()
     previewTabsPreview = new PreviewTabsPreview(editor, tab, -> true)
 
@@ -32,6 +32,20 @@ describe "PreviewTabsPreview", ->
       editor.setText("hello")
       editor.setText("world")
       expect(tab.hasClass("preview-tabs-preview")).toBe false
+
+  describe "keepIf", ->
+    beforeEach ->
+      editor.getTitle = -> "test.js"
+
+    it "keeps the tab if the tab if the filename matches the editor title", ->
+      expect(tab.hasClass("preview-tabs-preview")).toBe true
+      previewTabsPreview.keepIf("test.js")
+      expect(tab.hasClass("preview-tabs-preview")).toBe false
+
+    it "does not keep the tab if the filename does not match the editor title", ->
+      expect(tab.hasClass("preview-tabs-preview")).toBe true
+      previewTabsPreview.keepIf("not_test.js")
+      expect(tab.hasClass("preview-tabs-preview")).toBe true
 
   describe "destroying", ->
     subscriptions = null
