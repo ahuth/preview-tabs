@@ -29,8 +29,7 @@ describe "PreviewTabsPreview", ->
 
     it "keeps the tab when the editor is modified", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
-      previewTabsPreview.editorReady = true
-      editor.setText("hello")
+      editor.buffer.emitter.emit("did-change-modified")
       expect(tab.hasClass("preview-tabs-preview")).toBe false
 
   describe "keepIf", ->

@@ -6,7 +6,7 @@ class PreviewTabsPreview
     @tab.addClass("preview-tabs-preview")
     @subscriptions =
       itemSaved: @editor.onDidSave @_onDidSave
-      itemChanged: @editor.onDidChange @_onDidChange
+      itemChanged: @editor.onDidChangeModified @_onDidChange
       tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, @_onDidDoubleClickTab)
 
   destroy: ->
@@ -28,8 +28,7 @@ class PreviewTabsPreview
     @keep()
 
   _onDidChange: =>
-    @keep() if @editorReady
-    @editorReady = true
+    @keep()
 
   _onDidDoubleClickTab: =>
     @keep()
