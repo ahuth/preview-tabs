@@ -58,7 +58,7 @@ describe "PreviewTabsPreview", ->
       previewTabsPreview.destroy()
       expect(subscription.disposed).toBe true for subscription in subscriptions
 
-    it "calls its destroy notifier if the filename matches the editor title", ->
+    it "calls its destroy notifier", ->
       spyOn(previewTabsPreview, "destroyNotifier")
       previewTabsPreview.destroy()
       expect(previewTabsPreview.destroyNotifier).toHaveBeenCalled()
