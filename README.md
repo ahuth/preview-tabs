@@ -10,6 +10,6 @@ Doing the following makes a tab 'permanent', preventing it from being closed whe
 * Modifying it
 * Saving it
 * Double clicking the tab
-* Double click the file in the file tree
+* Double clicking the file in the file tree
 
 ![Preview Tabs Demo](https://cloud.githubusercontent.com/assets/2503289/4603894/bb812df4-517d-11e4-8c48-9f0bc382b465.gif)
