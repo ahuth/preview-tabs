@@ -1,5 +1,7 @@
 # Preview Tabs package
 
+For [Atom](https://atom.io/).
+
 Open new tabs as a 'preview', closing any previous previews. This allows you to quickly look at many files without creating
 a large number of open tabs.
 
