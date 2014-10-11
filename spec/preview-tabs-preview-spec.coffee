@@ -29,8 +29,7 @@ describe "PreviewTabsPreview", ->
 
     it "keeps the tab when the editor is modified", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
-      previewTabsPreview.editorReady = true
-      editor.setText("hello")
+      editor.buffer.emitter.emit("did-change-modified")
       expect(tab.hasClass("preview-tabs-preview")).toBe false
 
   describe "keepIf", ->
@@ -59,7 +58,7 @@ describe "PreviewTabsPreview", ->
       previewTabsPreview.destroy()
       expect(subscription.disposed).toBe true for subscription in subscriptions
 
-    it "calls its destroy notifier if the filename matches the editor title", ->
+    it "calls its destroy notifier", ->
       spyOn(previewTabsPreview, "destroyNotifier")
       previewTabsPreview.destroy()
       expect(previewTabsPreview.destroyNotifier).toHaveBeenCalled()

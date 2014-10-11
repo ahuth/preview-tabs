@@ -2,6 +2,8 @@
 PreviewTabsPreview = require "./preview-tabs-preview"
 PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
+# PreviewTabsView manages the preview for its pane, including creating and
+# destroying.
 module.exports =
 class PreviewTabsView extends View
   @content: ->
