@@ -1,13 +1,3 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 
-'menu': [
-  {
-    'label': 'Packages'
-    'submenu': [
-      'label': 'Preview Tabs'
-      'submenu': [
-        { 'label': 'Keep Tab', 'command': 'preview-tabs:keep-tab' }
-      ]
-    ]
-  }
-]
+'menu': []
