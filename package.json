@@ -2,9 +2,9 @@
   "name": "preview-tabs",
   "main": "./lib/preview-tabs",
   "version": "0.0.0",
-  "description": "Sublime-style preview tabs for Atom",
+  "description": "Open tabs as a preview until they're modified or saved",
   "activationEvents": [],
-  "repository": "https://github.com/atom/preview-tabs",
+  "repository": "https://github.com/ahuth/preview-tabs",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
