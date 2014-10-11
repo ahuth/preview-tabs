@@ -1,3 +1,5 @@
+# PreviewTabsEventHandler wraps jquery-style events with an api that matches
+# Atom's Event-Kit.
 module.exports =
 class PreviewTabsEventHandler
   constructor: (@element, @eventName, @target, @callback) ->
