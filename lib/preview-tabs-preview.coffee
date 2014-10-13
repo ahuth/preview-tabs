@@ -23,8 +23,8 @@ class PreviewTabsPreview
     @tab.removeClass("preview-tabs-preview")
     @destroy()
 
-  keepIf: (fileName) ->
-    @keep() if fileName is @editor.getTitle()
+  keepIf: (path) ->
+    @keep() if path is @editor.getPath()
 
   _onDidSave: =>
     @keep()
