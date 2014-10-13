@@ -76,8 +76,7 @@ describe "PreviewTabsView", ->
         tab2.remove()
 
       it "does not send the first item's tab to the preview", ->
-        pane.addItem(editor)
-        expect(previewTabsView.preview.tab.length).toBe 1
+        expect(previewTabsView._findTabForEditor(editor).length).toBe 1
 
   describe "removing", ->
     subscriptions = null
