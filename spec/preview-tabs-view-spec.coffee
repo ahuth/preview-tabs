@@ -66,7 +66,7 @@ describe "PreviewTabsView", ->
         tab2 = $(document.createElement("li")).addClass("tab")
         tab1.html "<div data-name='test.js' data-path='/path/1/test.js'>test1.js</div>"
         tab2.html "<div data-name='test.js' data-path='/path/2/test.js'>test1.js</div>"
-        atom.workspaceView.prepend(tab1, tab2)
+        pane.prepend(tab1, tab2)
 
         editor.getTitle = -> "test.js"
         editor.getPath = -> "/path/2/test.js"

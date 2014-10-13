@@ -9,7 +9,7 @@ class PreviewTabsView extends View
   @content: ->
     @div class: "preview-tabs"
 
-  initialize: (paneView) ->
+  initialize: (@paneView) ->
     @preview = null
     @pane = paneView.model
     @subscriptions =
@@ -38,4 +38,4 @@ class PreviewTabsView extends View
 
   _findTabForEditor: (editor) ->
     path = editor.getPath()
-    atom.workspaceView.find(".tab [data-path='#{path}']")
+    @paneView.find(".tab [data-path='#{path}']")
