@@ -43,9 +43,9 @@ describe "PreviewTabsView", ->
       tree = null
 
       beforeEach ->
-        editor.getTitle = -> "test.js"
+        editor.getPath = -> "/path/test.js"
         tree = $(document.createElement("ol")).addClass("tree-view")
-        tree.html('<li class="file entry" data-name="test.js">test.js</li>')
+        tree.html('<li class="file entry" data-path="/path/test.js">test.js</li>')
         atom.workspaceView.prepend(tree)
 
       afterEach ->

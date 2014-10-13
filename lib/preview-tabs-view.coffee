@@ -33,8 +33,8 @@ class PreviewTabsView extends View
     @preview = new PreviewTabsPreview(editor, tab, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
-    fileName = event.target.innerText
-    @preview?.keepIf(fileName)
+    path = event.target.getAttribute("data-path")
+    @preview?.keepIf(path)
 
   _findTabForEditor: (editor) ->
     path = editor.getPath()
