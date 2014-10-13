@@ -66,7 +66,7 @@ describe "PreviewTabsView", ->
         tab2 = $(document.createElement("li")).addClass("tab")
         tab1.html "<div data-name='test.js' data-path='/path/1/test.js'>test1.js</div>"
         tab2.html "<div data-name='test.js' data-path='/path/2/test.js'>test1.js</div>"
-        atom.workspaceView.prepend(tab1, tab2)
+        pane.prepend(tab1, tab2)
 
         editor.getTitle = -> "test.js"
         editor.getPath = -> "/path/2/test.js"
@@ -76,8 +76,7 @@ describe "PreviewTabsView", ->
         tab2.remove()
 
       it "does not send the first item's tab to the preview", ->
-        pane.addItem(editor)
-        expect(previewTabsView.preview.tab.length).toBe 1
+        expect(previewTabsView._findTabForEditor(editor).length).toBe 1
 
   describe "removing", ->
     subscriptions = null

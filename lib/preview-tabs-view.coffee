@@ -9,7 +9,7 @@ class PreviewTabsView extends View
   @content: ->
     @div class: "preview-tabs"
 
-  initialize: (paneView) ->
+  initialize: (@paneView) ->
     @preview = null
     @pane = paneView.model
     @subscriptions =
@@ -29,9 +29,13 @@ class PreviewTabsView extends View
     return unless paneItem.item.buffer?
     @preview?.close()
     editor = paneItem.item
-    tab = atom.workspaceView.find(".tab [data-path='#{editor.getPath()}']").parent()
+    tab = @_findTabForEditor(editor)
     @preview = new PreviewTabsPreview(editor, tab, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     fileName = event.target.innerText
     @preview?.keepIf(fileName)
+
+  _findTabForEditor: (editor) ->
+    path = editor.getPath()
+    @paneView.find(".tab [data-path='#{path}']")
