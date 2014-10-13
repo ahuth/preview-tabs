@@ -48,6 +48,9 @@ describe "PreviewTabsView", ->
         tree.html('<li class="file entry" data-name="test.js">test.js</li>')
         atom.workspaceView.prepend(tree)
 
+      afterEach ->
+        tree.remove()
+
       it "keeps the newly opened file", ->
         pane.addItem(editor)
         expect(previewTabsView.preview).toBeTruthy()
