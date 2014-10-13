@@ -36,12 +36,12 @@ describe "PreviewTabsPreview", ->
     beforeEach ->
       editor.getPath = -> "/path/1/test.js"
 
-    it "keeps the tab if the tab if the filename matches the editor title", ->
+    it "keeps the tab if the tab if the file's path matches the editor's", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
       previewTabsPreview.keepIf("/path/1/test.js")
       expect(tab.hasClass("preview-tabs-preview")).toBe false
 
-    it "does not keep the tab if the filename does not match the editor title", ->
+    it "does not keep the tab if the file's path does not match the editor's", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
       previewTabsPreview.keepIf("/path/2/test.js")
       expect(tab.hasClass("preview-tabs-preview")).toBe true
