@@ -54,6 +54,28 @@ describe "PreviewTabsView", ->
         tree.find(".file").trigger("dblclick")
         expect(previewTabsView.preview).toBeFalsy()
 
+    describe "when another item already has the same name", ->
+      tab1 = null
+      tab2 = null
+
+      beforeEach ->
+        tab1 = $(document.createElement("li")).addClass("tab")
+        tab2 = $(document.createElement("li")).addClass("tab")
+        tab1.html "<div data-name='test.js' data-path='/path/1/test.js'>test1.js</div>"
+        tab2.html "<div data-name='test.js' data-path='/path/2/test.js'>test1.js</div>"
+        atom.workspaceView.prepend(tab1, tab2)
+
+        editor.getTitle = -> "test.js"
+        editor.getPath = -> "/path/2/test.js"
+
+      afterEach ->
+        tab1.remove()
+        tab2.remove()
+
+      it "does not send the first item's tab to the preview", ->
+        pane.addItem(editor)
+        expect(previewTabsView.preview.tab.length).toBe 1
+
   describe "removing", ->
     subscriptions = null
 
