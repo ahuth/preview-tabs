@@ -34,7 +34,7 @@ describe "PreviewTabsPreview", ->
 
   describe "keepIf", ->
     beforeEach ->
-      editor.getPath = -> "/path/1/test.js"
+      editor.buffer.setPath("/path/1/test.js")
 
     it "keeps the tab if the tab if the file's path matches the editor's", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
