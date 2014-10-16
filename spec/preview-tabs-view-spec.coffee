@@ -43,7 +43,7 @@ describe "PreviewTabsView", ->
       tree = null
 
       beforeEach ->
-        editor.getPath = -> "/path/test.js"
+        editor.buffer.setPath("/path/test.js")
         tree = $(document.createElement("ol")).addClass("tree-view")
         tree.html('<li class="file entry" data-path="/path/test.js">test.js</li>')
         atom.workspaceView.prepend(tree)
@@ -69,7 +69,7 @@ describe "PreviewTabsView", ->
         pane.prepend(tab1, tab2)
 
         editor.getTitle = -> "test.js"
-        editor.getPath = -> "/path/2/test.js"
+        editor.buffer.setPath("/path/2/test.js")
 
       afterEach ->
         tab1.remove()
