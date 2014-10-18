@@ -16,10 +16,9 @@ class PreviewTabsView extends View
       paneItemAdded: @pane.onDidAddItem @_onPaneItemAdded
       treeEntryDoubleClicked: new PreviewTabsEventHandler(atom.workspaceView, "dblclick", ".tree-view .file", @_onTreeEntryDoubleClicked)
 
-    setTimeout =>
+    @_deferUntilTabsLoaded =>
       @tabBar = @paneView.find(".tab-bar")
       @subscriptions.tabDropped = new PreviewTabsEventHandler(@tabBar, "drop", null, @_onTabDropped)
-    , 1
 
   remove: ->
     @unsubscribe()
@@ -29,6 +28,9 @@ class PreviewTabsView extends View
   unsubscribe: ->
     subscription.dispose() for own name, subscription of @subscriptions
     super
+
+  _deferUntilTabsLoaded: (callback) ->
+    setTimeout (->callback?()), 1
 
   _onPaneItemAdded: (paneItem) =>
     return unless paneItem.item.buffer?
