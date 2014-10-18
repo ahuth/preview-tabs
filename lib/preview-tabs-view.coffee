@@ -16,6 +16,11 @@ class PreviewTabsView extends View
       paneItemAdded: @pane.onDidAddItem @_onPaneItemAdded
       treeEntryDoubleClicked: new PreviewTabsEventHandler(atom.workspaceView, "dblclick", ".tree-view .file", @_onTreeEntryDoubleClicked)
 
+    setTimeout =>
+      @tabBar = @paneView.find(".tab-bar")
+      @subscriptions.tabDropped = new PreviewTabsEventHandler(@tabBar, "drop", null, @_onTabDropped)
+    , 1
+
   remove: ->
     @unsubscribe()
     @preview?.destroy()
@@ -35,6 +40,9 @@ class PreviewTabsView extends View
   _onTreeEntryDoubleClicked: (event) =>
     path = event.target.getAttribute("data-path")
     @preview?.keepIf(path)
+
+  _onTabDropped: (event) =>
+    @preview?.keep()
 
   _findTabForEditor: (editor) ->
     path = editor.getPath()
