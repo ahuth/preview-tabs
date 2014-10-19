@@ -16,11 +16,8 @@ class PreviewTabsPaneController
       @subscriptions.tabDropped = new PreviewTabsEventHandler(@tabBar, "drop", null, @_onTabDropped)
 
   remove: ->
-    @unsubscribe()
-    @preview?.destroy()
-
-  unsubscribe: ->
     subscription.dispose() for own name, subscription of @subscriptions
+    @preview?.destroy()
 
   _deferUntilTabsLoaded: (callback) ->
     setTimeout (->callback?()), 1
