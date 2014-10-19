@@ -1,21 +1,21 @@
 _ = require "underscore-plus"
-PreviewTabsPaneView = require "./preview-tabs-pane-view"
+PreviewTabsPaneController = require "./preview-tabs-pane-controller"
 
 # PreviewTabsPanesManager is responsible for adding/removing our preview tabs
 # pane views to panes as they're created and destroyed.
 module.exports =
 class PreviewTabsPanesManager
   constructor: ->
-    @previewTabsPaneViews = []
+    @previewTabsPaneControllers = []
     @paneSubscription = atom.workspaceView.eachPaneView (paneView) =>
-      previewTabsPaneView = new PreviewTabsPaneView(paneView)
-      @previewTabsPaneViews.push(previewTabsPaneView)
+      previewTabsPaneController = new PreviewTabsPaneController(paneView)
+      @previewTabsPaneControllers.push(previewTabsPaneController)
       subscription = paneView.model.onDidDestroy =>
-        _.remove(@previewTabsPaneViews, previewTabsPaneView)
+        _.remove(@previewTabsPaneControllers, previewTabsPaneController)
         subscription.dispose()
-      previewTabsPaneView
+      previewTabsPaneController
 
   destroy: ->
     @paneSubscription?.off()
-    previewTabsPaneView.remove() for previewTabsPaneView in @previewTabsPaneViews
-    @previewTabsPaneViews = []
+    previewTabsPaneController.remove() for previewTabsPaneController in @previewTabsPaneControllers
+    @previewTabsPaneControllers = []

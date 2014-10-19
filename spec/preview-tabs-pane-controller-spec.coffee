@@ -1,14 +1,14 @@
 {$, WorkspaceView, TextEditorView, View}  = require "atom"
-PreviewTabsPaneView = require "../lib/preview-tabs-pane-view"
+PreviewTabsPaneController = require "../lib/preview-tabs-pane-controller"
 
-describe "PreviewTabsPaneView", ->
+describe "PreviewTabsPaneController", ->
   pane = null
-  previewTabsPaneView = null
+  previewTabsPaneController = null
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
     pane = atom.workspaceView.getActivePaneView()
-    previewTabsPaneView = new PreviewTabsPaneView(pane)
+    previewTabsPaneController = new PreviewTabsPaneController(pane)
 
   describe "adding pane items", ->
     editor = null
@@ -21,23 +21,23 @@ describe "PreviewTabsPaneView", ->
       editor = new TextEditorView({}).getEditor()
 
     it "adds a new preview", ->
-      expect(previewTabsPaneView.preview).toBeFalsy()
+      expect(previewTabsPaneController.preview).toBeFalsy()
       pane.addItem(editor)
-      expect(previewTabsPaneView.preview).toBeTruthy()
+      expect(previewTabsPaneController.preview).toBeTruthy()
 
     it "closes the old preview if there is one", ->
       pane.addItem(editor)
-      closeSpy = spyOn(previewTabsPaneView.preview, "close")
+      closeSpy = spyOn(previewTabsPaneController.preview, "close")
 
       editor2 = new TextEditorView({}).getEditor()
       pane.addItem(editor2)
       expect(closeSpy).toHaveBeenCalled()
 
     it "does not preview items without a buffer", ->
-      expect(previewTabsPaneView.preview).toBeFalsy()
+      expect(previewTabsPaneController.preview).toBeFalsy()
       genericView = new GenericView()
       pane.addItem(genericView)
-      expect(previewTabsPaneView.preview).toBeFalsy()
+      expect(previewTabsPaneController.preview).toBeFalsy()
 
     describe "when a tree entry is double clicked", ->
       tree = null
@@ -53,9 +53,9 @@ describe "PreviewTabsPaneView", ->
 
       it "keeps the newly opened file", ->
         pane.addItem(editor)
-        expect(previewTabsPaneView.preview).toBeTruthy()
+        expect(previewTabsPaneController.preview).toBeTruthy()
         tree.find(".file").trigger("dblclick")
-        expect(previewTabsPaneView.preview).toBeFalsy()
+        expect(previewTabsPaneController.preview).toBeFalsy()
 
     describe "when another item already has the same name", ->
       tab1 = null
@@ -76,16 +76,16 @@ describe "PreviewTabsPaneView", ->
         tab2.remove()
 
       it "does not send the first item's tab to the preview", ->
-        expect(previewTabsPaneView._findTabForEditor(editor).length).toBe 1
+        expect(previewTabsPaneController._findTabForEditor(editor).length).toBe 1
 
   describe "removing", ->
     subscriptions = null
 
     beforeEach ->
       subscriptions = []
-      subscriptions.push subscription for own name, subscription of previewTabsPaneView.subscriptions
+      subscriptions.push subscription for own name, subscription of previewTabsPaneController.subscriptions
 
     it "unsubscribes from its subscriptions", ->
       expect(subscription.disposed).toBe false for subscription in subscriptions
-      previewTabsPaneView.remove()
+      previewTabsPaneController.remove()
       expect(subscription.disposed).toBe true for subscription in subscriptions
