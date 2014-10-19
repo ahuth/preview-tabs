@@ -13,10 +13,6 @@ describe "PreviewTabsPaneController", ->
   describe "adding pane items", ->
     editor = null
 
-    class GenericView extends View
-      @content: -> @div "test"
-      initialize: ->
-
     beforeEach ->
       editor = new TextEditorView({}).getEditor()
 
@@ -33,11 +29,14 @@ describe "PreviewTabsPaneController", ->
       pane.addItem(editor2)
       expect(closeSpy).toHaveBeenCalled()
 
-    it "does not preview items without a buffer", ->
-      expect(previewTabsPaneController.preview).toBeFalsy()
-      genericView = new GenericView()
-      pane.addItem(genericView)
-      expect(previewTabsPaneController.preview).toBeFalsy()
+    it "previews text and image editors", ->
+      expect(previewTabsPaneController._shouldPreviewItem(editor)).toBe true
+      imageEditor = new class ImageEditor
+      expect(previewTabsPaneController._shouldPreviewItem(imageEditor)).toBe true
+
+    it "does not preview non-editor views", ->
+      settingsView = new class SettingsView
+      expect(previewTabsPaneController._shouldPreviewItem(settingsView)).toBe false
 
     describe "when a tree entry is double clicked", ->
       tree = null

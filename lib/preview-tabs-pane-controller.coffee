@@ -23,7 +23,7 @@ class PreviewTabsPaneController
     setTimeout (->callback?()), 1
 
   _onPaneItemAdded: (paneItem) =>
-    return unless paneItem.item.buffer?
+    return unless @_shouldPreviewItem(paneItem.item)
     @preview?.close()
     editor = paneItem.item
     tab = @_findTabForEditor(editor)
@@ -39,3 +39,6 @@ class PreviewTabsPaneController
   _findTabForEditor: (editor) ->
     path = editor.getPath()
     @paneView.find(".tab [data-path='#{path}']")
+
+  _shouldPreviewItem: (item) ->
+    item.constructor.name in ["TextEditor", "ImageEditor"]
