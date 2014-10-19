@@ -78,6 +78,22 @@ describe "PreviewTabsPaneController", ->
       it "does not send the first item's tab to the preview", ->
         expect(previewTabsPaneController._findTabForEditor(editor).length).toBe 1
 
+    describe "when a tab is dropped into the pane", ->
+      tabBar = null
+
+      beforeEach ->
+        tabBar = $(document.createElement("ul")).addClass("tab-bar")
+        pane.prepend(tabBar)
+
+      afterEach ->
+        tabBar.remove()
+
+      it "keeps the dropped tab", ->
+        pane.addItem(editor)
+        expect(previewTabsPaneController.preview).toBeTruthy()
+        tabBar.trigger("drop")
+        expect(previewTabsPaneController.preview).toBeFalsy()
+
   describe "removing", ->
     subscriptions = null
 
