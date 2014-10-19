@@ -10,7 +10,7 @@ describe "PreviewTabsPanesManager", ->
     pane = atom.workspaceView.getActivePaneView()
     previewTabsPanesManager = new PreviewTabsPanesManager()
 
-  describe ".constructor", ->
+  describe "creating", ->
     it "adds a previews tabs view to existing panes", ->
       expect(previewTabsPanesManager.previewTabsPaneViews.length).toBe 1
 
@@ -26,7 +26,7 @@ describe "PreviewTabsPanesManager", ->
       atom.workspaceView.destroyActivePane()
       expect(previewTabsPanesManager.previewTabsPaneViews.length).toBe 1
 
-  describe ".destroy", ->
+  describe "destroying", ->
     it "removes all preview tabs views", ->
       pane.splitRight(pane.copyActiveItem())
       expect(previewTabsPanesManager.previewTabsPaneViews.length).toBe 2
