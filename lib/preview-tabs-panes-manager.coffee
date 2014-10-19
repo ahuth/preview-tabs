@@ -1,8 +1,8 @@
 _ = require "underscore-plus"
 PreviewTabsPaneController = require "./preview-tabs-pane-controller"
 
-# PreviewTabsPanesManager is responsible for adding/removing our preview tabs
-# pane views to panes as they're created and destroyed.
+# PreviewTabsPanesManager adds and removes pane controllers as panes are
+# created and destroyed.
 module.exports =
 class PreviewTabsPanesManager
   constructor: ->

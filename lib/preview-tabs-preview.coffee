@@ -1,7 +1,7 @@
 PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
-# PreviewTabsPreview represents a 'preview' tab, and is responsible for making
-# itself permanent or closing itself.
+# PreviewTabsPreview closes or makes permanent its tab/editor under certain
+# conditions.
 module.exports =
 class PreviewTabsPreview
   constructor: (@editor, @tab, @destroyNotifier) ->
