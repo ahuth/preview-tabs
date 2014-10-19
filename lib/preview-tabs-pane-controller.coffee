@@ -1,15 +1,10 @@
-{View} = require "atom"
 PreviewTabsPreview = require "./preview-tabs-preview"
 PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
-# PreviewTabsView manages the preview for its pane, including creating and
-# destroying.
+# PreviewTabsPaneController creates and manages the preview for its pane.
 module.exports =
-class PreviewTabsView extends View
-  @content: ->
-    @div class: "preview-tabs"
-
-  initialize: (@paneView) ->
+class PreviewTabsPaneController
+  constructor: (@paneView) ->
     @preview = null
     @pane = paneView.model
     @subscriptions =
@@ -21,13 +16,8 @@ class PreviewTabsView extends View
       @subscriptions.tabDropped = new PreviewTabsEventHandler(@tabBar, "drop", null, @_onTabDropped)
 
   remove: ->
-    @unsubscribe()
-    @preview?.destroy()
-    super
-
-  unsubscribe: ->
     subscription.dispose() for own name, subscription of @subscriptions
-    super
+    @preview?.destroy()
 
   _deferUntilTabsLoaded: (callback) ->
     setTimeout (->callback?()), 1
