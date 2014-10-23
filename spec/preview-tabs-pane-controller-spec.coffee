@@ -54,7 +54,7 @@ describe "PreviewTabsPaneController", ->
       afterEach ->
         tree.remove()
 
-      it "keeps the newly opened file", ->
+      it "keeps the newly opened file when the name is clicked", ->
         pane.addItem(editor)
         expect(previewTabsPaneController.preview).toBeTruthy()
         tree.find(".file [data-path]").trigger("dblclick")
