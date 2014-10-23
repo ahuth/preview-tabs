@@ -1,7 +1,7 @@
 {
   "name": "preview-tabs",
   "main": "./lib/preview-tabs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Open tabs as a preview until they're modified or saved",
   "activationEvents": [],
   "repository": "https://github.com/ahuth/preview-tabs",
