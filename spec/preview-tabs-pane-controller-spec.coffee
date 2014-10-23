@@ -44,13 +44,23 @@ describe "PreviewTabsPaneController", ->
       beforeEach ->
         editor.buffer.setPath("/path/test.js")
         tree = $(document.createElement("ol")).addClass("tree-view")
-        tree.html('<li class="file entry" data-path="/path/test.js">test.js</li>')
+        tree.html """
+          <li class="file entry">
+            <span data-path="/path/test.js">test.js</span>
+          </li>
+        """
         atom.workspaceView.prepend(tree)
 
       afterEach ->
         tree.remove()
 
-      it "keeps the newly opened file", ->
+      it "keeps the newly opened file when the name is clicked", ->
+        pane.addItem(editor)
+        expect(previewTabsPaneController.preview).toBeTruthy()
+        tree.find(".file [data-path]").trigger("dblclick")
+        expect(previewTabsPaneController.preview).toBeFalsy()
+
+      it "keeps the newly opened file when the entire entry line is clicked", ->
         pane.addItem(editor)
         expect(previewTabsPaneController.preview).toBeTruthy()
         tree.find(".file").trigger("dblclick")
