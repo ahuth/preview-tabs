@@ -60,6 +60,12 @@ describe "PreviewTabsPaneController", ->
         tree.find(".file [data-path]").trigger("dblclick")
         expect(previewTabsPaneController.preview).toBeFalsy()
 
+      it "keeps the newly opened file when the entire entry line is clicked", ->
+        pane.addItem(editor)
+        expect(previewTabsPaneController.preview).toBeTruthy()
+        tree.find(".file").trigger("dblclick")
+        expect(previewTabsPaneController.preview).toBeFalsy()
+
     describe "when another item already has the same name", ->
       tab1 = null
       tab2 = null
