@@ -1,3 +1,8 @@
+## 0.1.5
+* Fixed an issue where double clicking in the file tree only worked when clicking directly on the name, instead of the
+entire line. [Issue #10](https://github.com/ahuth/preview-tabs/issues/10)
+* Now that the tabs package is at v0.55, simplified event binding to drop events. [Pull Request #9](https://github.com/ahuth/preview-tabs/pull/9)
+
 ## 0.1.4
 * Fixed an issue when dragging and dropping tabs between panes. [Issue #5](https://github.com/ahuth/preview-tabs/issues/5)
 * Allow image editors to be previewed. [Issue #4](https://github.com/ahuth/preview-tabs/issues/4)
