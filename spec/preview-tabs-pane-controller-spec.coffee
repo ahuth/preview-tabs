@@ -44,7 +44,11 @@ describe "PreviewTabsPaneController", ->
       beforeEach ->
         editor.buffer.setPath("/path/test.js")
         tree = $(document.createElement("ol")).addClass("tree-view")
-        tree.html('<li class="file entry" data-path="/path/test.js">test.js</li>')
+        tree.html """
+          <li class="file entry">
+            <span data-path="/path/test.js">test.js</span>
+          </li>
+        """
         atom.workspaceView.prepend(tree)
 
       afterEach ->
@@ -53,7 +57,7 @@ describe "PreviewTabsPaneController", ->
       it "keeps the newly opened file", ->
         pane.addItem(editor)
         expect(previewTabsPaneController.preview).toBeTruthy()
-        tree.find(".file").trigger("dblclick")
+        tree.find(".file [data-path]").trigger("dblclick")
         expect(previewTabsPaneController.preview).toBeFalsy()
 
     describe "when another item already has the same name", ->
