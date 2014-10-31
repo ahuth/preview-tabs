@@ -21,7 +21,7 @@ class PreviewTabsPaneController
     @preview?.close()
     editor = paneItem.item
     tab = @_findTabForEditor(editor)
-    @preview = new PreviewTabsPreview(editor, tab, => @preview = null)
+    @preview = new PreviewTabsPreview(@pane, editor, tab, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     path = event.target.getAttribute("data-path") || event.target.children[0].getAttribute("data-path")

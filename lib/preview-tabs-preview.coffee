@@ -4,7 +4,7 @@ PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 # conditions.
 module.exports =
 class PreviewTabsPreview
-  constructor: (@editor, @tab, @destroyNotifier) ->
+  constructor: (@pane, @editor, @tab, @destroyNotifier) ->
     @tab.addClass("preview-tabs-preview")
     @subscriptions =
       tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, => @keep())
@@ -16,8 +16,7 @@ class PreviewTabsPreview
     @destroyNotifier?()
 
   close: ->
-    if @editor == atom.workspace.getActivePaneItem()
-      atom.workspace.destroyActivePaneItem()
+    @pane.destroyItem(@editor)
     @destroy()
 
   keep: ->
