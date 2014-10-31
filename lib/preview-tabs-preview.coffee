@@ -16,7 +16,8 @@ class PreviewTabsPreview
     @destroyNotifier?()
 
   close: ->
-    @editor.destroy()
+    if @editor == atom.workspace.getActivePaneItem()
+      atom.workspace.destroyActivePaneItem()
     @destroy()
 
   keep: ->
