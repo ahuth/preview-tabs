@@ -49,6 +49,12 @@ describe "PreviewTabsPreview", ->
       previewTabsPreview.keepIf("/path/2/test.js")
       expect(tab.hasClass("preview-tabs-preview")).toBe true
 
+  describe "closing", ->
+    it "removes the editor from the pane", ->
+      expect(pane.items.length).toBe 1
+      previewTabsPreview.close()
+      expect(pane.items.length).toBe 0
+
   describe "destroying", ->
     subscriptions = null
 
