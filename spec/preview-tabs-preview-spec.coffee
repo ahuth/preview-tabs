@@ -9,7 +9,7 @@ describe "PreviewTabsPreview", ->
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
-    pane = atom.workspaceView.getActivePane()
+    pane = atom.workspaceView.getActivePaneView()
     editor = new TextEditorView({}).getEditor()
     pane.addItem(editor)
     tab = $(document.createElement("li")).html("test.js")
