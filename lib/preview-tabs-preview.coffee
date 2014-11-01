@@ -7,12 +7,12 @@ class PreviewTabsPreview
   constructor: (@pane, @editor, @tab, @destroyNotifier) ->
     @tab.addClass("preview-tabs-preview")
     @subscriptions =
+      itemSaved: @editor.onDidSave? => @keep()
+      itemChanged: @editor.onDidChangeModified? => @keep()
       tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, => @keep())
-    @subscriptions.itemSaved = @editor.onDidSave(=> @keep()) if @editor.onDidSave?
-    @subscriptions.itemChanged = @editor.onDidChangeModified(=> @keep()) if @editor.onDidChangeModified?
 
   destroy: ->
-    subscription.dispose() for own name, subscription of @subscriptions
+    subscription?.dispose() for own name, subscription of @subscriptions
     @destroyNotifier?()
 
   close: ->

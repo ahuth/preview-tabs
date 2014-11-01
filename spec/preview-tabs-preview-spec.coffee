@@ -71,3 +71,19 @@ describe "PreviewTabsPreview", ->
       spyOn(previewTabsPreview, "destroyNotifier")
       previewTabsPreview.destroy()
       expect(previewTabsPreview.destroyNotifier).toHaveBeenCalled()
+
+  describe "non-text editors", ->
+    beforeEach ->
+      pane.destroyItem(editor)
+      editor = new class ImageEditor
+      previewTabsPreview = new PreviewTabsPreview(pane, editor, tab, -> true)
+
+    it "keeps the tab when it is double clicked", ->
+      expect(tab.hasClass("preview-tabs-preview")).toBe true
+      tab.trigger("dblclick")
+      expect(tab.hasClass("preview-tabs-preview")).toBe false
+
+    it "can be destroyed", ->
+      spyOn(previewTabsPreview, "destroyNotifier")
+      previewTabsPreview.destroy()
+      expect(previewTabsPreview.destroyNotifier).toHaveBeenCalled()
