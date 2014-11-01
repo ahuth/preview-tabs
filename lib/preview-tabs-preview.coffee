@@ -4,19 +4,19 @@ PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 # conditions.
 module.exports =
 class PreviewTabsPreview
-  constructor: (@editor, @tab, @destroyNotifier) ->
+  constructor: (@pane, @editor, @tab, @destroyNotifier) ->
     @tab.addClass("preview-tabs-preview")
     @subscriptions =
-      itemSaved: @editor.onDidSave => @keep()
-      itemChanged: @editor.onDidChangeModified => @keep()
       tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, => @keep())
+    @subscriptions.itemSaved = @editor.onDidSave(=> @keep()) if @editor.onDidSave?
+    @subscriptions.itemChanged = @editor.onDidChangeModified(=> @keep()) if @editor.onDidChangeModified?
 
   destroy: ->
     subscription.dispose() for own name, subscription of @subscriptions
     @destroyNotifier?()
 
   close: ->
-    @editor.destroy()
+    @pane.destroyItem(@editor)
     @destroy()
 
   keep: ->

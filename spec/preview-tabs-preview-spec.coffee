@@ -3,14 +3,17 @@ PreviewTabsPreview = require "../lib/preview-tabs-preview"
 
 describe "PreviewTabsPreview", ->
   previewTabsPreview = null
+  pane = null
   editor = null
   tab = null
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
-    tab = $(document.createElement("li")).html("test.js")
+    pane = atom.workspaceView.getActivePaneView()
     editor = new TextEditorView({}).getEditor()
-    previewTabsPreview = new PreviewTabsPreview(editor, tab, -> true)
+    pane.addItem(editor)
+    tab = $(document.createElement("li")).html("test.js")
+    previewTabsPreview = new PreviewTabsPreview(pane, editor, tab, -> true)
 
   describe "creating", ->
     it "adds the preview-tabs-preview class to its tab", ->
@@ -45,6 +48,12 @@ describe "PreviewTabsPreview", ->
       expect(tab.hasClass("preview-tabs-preview")).toBe true
       previewTabsPreview.keepIf("/path/2/test.js")
       expect(tab.hasClass("preview-tabs-preview")).toBe true
+
+  describe "closing", ->
+    it "removes the editor from the pane", ->
+      expect(pane.items.length).toBe 1
+      previewTabsPreview.close()
+      expect(pane.items.length).toBe 0
 
   describe "destroying", ->
     subscriptions = null
