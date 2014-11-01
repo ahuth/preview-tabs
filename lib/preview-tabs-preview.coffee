@@ -12,7 +12,7 @@ class PreviewTabsPreview
       tabDoubleClicked: new PreviewTabsEventHandler(@tab, "dblclick", null, => @keep())
 
   destroy: ->
-    subscription.dispose?() for own name, subscription of @subscriptions
+    subscription?.dispose() for own name, subscription of @subscriptions
     @destroyNotifier?()
 
   close: ->
