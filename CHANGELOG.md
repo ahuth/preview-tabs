@@ -1,3 +1,6 @@
+## 0.1.6
+* Fixed an issue when previewing image editors.
+
 ## 0.1.5
 * Fixed an issue where double clicking in the file tree only worked when clicking directly on the name, instead of the
 entire line. [Issue #10](https://github.com/ahuth/preview-tabs/issues/10)
