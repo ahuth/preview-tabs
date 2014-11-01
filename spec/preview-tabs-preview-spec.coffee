@@ -3,14 +3,17 @@ PreviewTabsPreview = require "../lib/preview-tabs-preview"
 
 describe "PreviewTabsPreview", ->
   previewTabsPreview = null
+  pane = null
   editor = null
   tab = null
 
   beforeEach ->
     atom.workspaceView = new WorkspaceView
-    tab = $(document.createElement("li")).html("test.js")
+    pane = atom.workspaceView.getActivePane()
     editor = new TextEditorView({}).getEditor()
-    previewTabsPreview = new PreviewTabsPreview(editor, tab, -> true)
+    pane.addItem(editor)
+    tab = $(document.createElement("li")).html("test.js")
+    previewTabsPreview = new PreviewTabsPreview(pane, editor, tab, -> true)
 
   describe "creating", ->
     it "adds the preview-tabs-preview class to its tab", ->
