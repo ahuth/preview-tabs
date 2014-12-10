@@ -1,3 +1,4 @@
+_ = require "underscore-plus"
 PreviewTabsPreview = require "./preview-tabs-preview"
 PreviewTabsEventHandler = require "./preview-tabs-event-handler"
 
@@ -20,8 +21,9 @@ class PreviewTabsPaneController
     return unless @_shouldPreviewItem(paneItem.item)
     @preview?.close()
     editor = paneItem.item
-    tab = @_findTabForEditor(editor)
-    @preview = new PreviewTabsPreview(@pane, editor, tab, => @preview = null)
+    _.defer =>
+      tab = @_findTabForEditor(editor)
+      @preview = new PreviewTabsPreview(@pane, editor, tab, => @preview = null)
 
   _onTreeEntryDoubleClicked: (event) =>
     path = event.target.getAttribute("data-path") || event.target.children[0].getAttribute("data-path")
