@@ -1,3 +1,5 @@
+Deprecated. This functionality is now built in to Atom.
+
 # Preview Tabs package
 
 For [Atom](https://atom.io/).
